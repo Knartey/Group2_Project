@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from sklearn.svm import SVC
 import pickle
 from sklearn.metrics import ConfusionMatrixDisplay
 from sklearn.feature_selection import RFECV
@@ -20,10 +21,10 @@ le = pickle.load(open('label_encoder.pkl', 'rb'))
 #Machine Learning Techniques (Supervised):
 
 #Linear Regression
-linearReg = LinearRegression()
+linear_Reg = LinearRegression()
 x_train, x_test, y_train, y_test = train_test_split(optimized_x_reg, y_reg, test_size = 0.2, random_state=10)
-linearModel = linearReg.fit(x_train, y_train)
-y_pred_linear = linearModel.predict(x_test)
+linear_Model = linear_Reg.fit(x_train, y_train)
+y_pred_linear = linear_Model.predict(x_test)
 
 plt.scatter(y_test, y_pred_linear, color='blue', alpha=0.6, label='Predictions')
 
@@ -38,15 +39,16 @@ plt.show()
 
 #Logistic Regression
 class_x_train, class_x_test, class_y_train, class_y_test = train_test_split(optimized_x_clf, classification_y, test_size=0.2, random_state=10)
-logReg = LogisticRegression(max_iter=5000)
-logModel = logReg.fit(class_x_train, class_y_train)
-y_pred_log = logReg.predict(class_x_test)
+log_Reg = LogisticRegression(max_iter=5000)
+log_Model = log_Reg.fit(class_x_train, class_y_train)
+y_pred_log = log_Reg.predict(class_x_test)
 
-ConfusionMatrixDisplay.from_estimator(logModel, class_x_test, class_y_test, display_labels=le.classes_)
+ConfusionMatrixDisplay.from_estimator(log_Model, class_x_test, class_y_test, display_labels=le.classes_)
 plt.title("Logistic Regression - Confusion Matrix")
 plt.show()
 #Support Vector Machines (SVM)
-svm_model = SVC(kernel='linear')
+svm_model = SVC(kernel='linear', C=1.0)
+
 
 #Decision Trees
 
